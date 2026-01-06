@@ -1,0 +1,29 @@
+package org.firstinspires.ftc.teamcode.Code.Tests;
+
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+
+@Autonomous(name = "ServoingProperly")
+public class ServoingProperly extends OpMode {
+
+    private Limelight3A limelight3A;
+
+
+    @Override
+    public void init() {
+
+        limelight3A = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight3A.pipelineSwitch(2);
+        limelight3A.start();
+    }
+
+    @Override
+    public void loop() {
+
+
+    }
+
+}
