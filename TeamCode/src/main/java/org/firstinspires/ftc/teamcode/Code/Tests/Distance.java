@@ -42,7 +42,7 @@ public class Distance extends OpMode {
             double taAvg = taCount > 0 ? taSum / taCount : 0;
 
             // Calculate distance using your new trendline equation
-            double distanceInches = taAvg > 0 ? 68.8 * Math.pow(taAvg, -0.5) : 0;
+            double distanceInches = taAvg > 0 ? 69.0 * Math.pow(taAvg, -0.506) : 0;
 
             telemetry.addLine("TARGET DETECTED");
             telemetry.addData("Raw ta", "%.3f", ta);

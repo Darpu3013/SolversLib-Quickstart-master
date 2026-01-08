@@ -22,7 +22,7 @@ public class Hood extends OpMode {
         hoodServo = hardwareMap.get(Servo.class, "hoodServo");
 
         // Set hood to minimum at start
-        hoodServo.setPosition(0.16);
+        hoodServo.setPosition(0.08);
 
 
         limelight.pipelineSwitch(2); // AprilTag pipeline
@@ -48,7 +48,7 @@ public class Hood extends OpMode {
 
             // Map hood angle to servo position
             double servoPosition = (hoodAngle - HOOD_MIN_ANGLE) / (HOOD_MAX_ANGLE - HOOD_MIN_ANGLE);
-            servoPosition = Math.max(0.16, Math.min(0.735, servoPosition)); // clamp
+            servoPosition = Math.max(0.0754, Math.min(0.08, servoPosition)); // clamp
 
             // Set servo position
             hoodServo.setPosition(servoPosition);
