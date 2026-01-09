@@ -48,8 +48,8 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void updateConstants(){
-        pd.setP(RobotConstants.turretPCoeff);
-        pd.setD(RobotConstants.turretDCoeff);
+        pd.setP(0);
+        pd.setD(0);
         turretMotor.setInverted(RobotConstants.turretReversed);
     }
 

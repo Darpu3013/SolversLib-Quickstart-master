@@ -28,7 +28,7 @@ public class FlywheelTestOpMode extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.dpadUpWasPressed()) {
+        /*if (gamepad1.dpadUpWasPressed()) {
             velocity += 20;
         } else if (gamepad1.dpadDownWasPressed()) {
             velocity -= 20;
@@ -37,15 +37,18 @@ public class FlywheelTestOpMode extends OpMode {
             hood.hoodTo(hood.getServo().getRawPosition() + 0.02);
         }
         if (gamepad1.leftBumperWasPressed()) {
-            hood.hoodTo(hood.getServo().getRawPosition() - 0.02);}
+            hood.hoodTo(hood.getServo().getRawPosition() - 0.02);}*/
         intake.set(gamepad1.right_trigger);
 
-            flywheels.setFlywheelVel(velocity);
-            flywheels.updateConstants();
-            telemetry.addData("target", velocity);
-            telemetry.addData("hoodPos", hood.getServo().getRawPosition());
-            telemetry.addData("distance", localizator.getDistance());
-            telemetry.update();
+        double distance = localizator.getDistance();
+        flywheels.runFlywheelRegression(distance);
+        hood.runHoodRegression(distance);
+        flywheels.updateConstants();
+        telemetry.addData("target", velocity);
+        telemetry.addData("hoodPos", hood.getServo().getRawPosition());
+        telemetry.addData("distance", localizator.getDistance());
+        telemetry.addData("hoodTarget", hood.getHoodOutput(distance));
+        telemetry.update();
         }
     }
 

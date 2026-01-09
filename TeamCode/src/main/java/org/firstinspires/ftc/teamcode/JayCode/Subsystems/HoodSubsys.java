@@ -22,8 +22,11 @@ public class HoodSubsys extends SubsystemBase {
     }
 
     public void runHoodRegression(double distance){
-        double output = -0.000060814 * Math.pow(distance, 2) + 0.0196986 * distance - -0.863932;
+        double output = -0.000060814 * Math.pow(distance, 2) + 0.0196986 * distance - 0.863932;
         hoodTo(output);
+    }
+    public double getHoodOutput(double distance){
+        return -0.000060814 * Math.pow(distance, 2) + 0.0196986 * distance - -0.863932;
     }
 
     public ServoEx getServo(){

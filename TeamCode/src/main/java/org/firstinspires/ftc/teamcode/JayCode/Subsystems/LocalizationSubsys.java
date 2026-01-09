@@ -38,7 +38,6 @@ public class LocalizationSubsys extends SubsystemBase {
     }
 
     public double getDistance() {
-        pinpoint.update();
         double referenceX = pinpoint.getPosX(DistanceUnit.INCH);
         double referenceY = pinpoint.getPosY(DistanceUnit.INCH);
         double llX = 0, llY = 0;
@@ -56,6 +55,10 @@ public class LocalizationSubsys extends SubsystemBase {
         }
         double distX = llX - goalX, distY = llY - goalY;
         return Math.hypot(distX, distY);
+    }
+
+    public void updatePinpoint(){
+        pinpoint.update();
     }
 
     public double getPinpointHeading(){

@@ -3,8 +3,11 @@ package org.firstinspires.ftc.teamcode.JayCode.Subsystems;
 import androidx.core.math.MathUtils;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.MotorControlAlgorithm;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.controller.PDController;
+import com.seattlesolvers.solverslib.controller.PIDController;
+import com.seattlesolvers.solverslib.controller.PIDFController;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -25,6 +28,9 @@ public class TurretSubsys extends SubsystemBase {
 
         if (RobotConstants.robotTeam == RobotConstants.Team.RED) {goalY = RobotConstants.redGoalY;}
         else {goalY = RobotConstants.blueGoalY;}
+
+        pdController = new PDController(RobotConstants.turretPCoeff, RobotConstants.turretDCoeff);
+        pdController.setTolerance(RobotConstants.turretTolerance);
     }
 
     public void turretToAngle(double targetAngle){
@@ -41,11 +47,17 @@ public class TurretSubsys extends SubsystemBase {
         double robotHeading = robotPose.getHeading(AngleUnit.DEGREES);
 
         double dx = goalX - robotX, dy = goalY - robotY;
-        double targetHeading = Math.toDegrees(Math.atan2(dy, dx));
-        double turretTarget = targetHeading - robotHeading;
+        double targetGlobalAngle = Math.toDegrees(Math.atan2(dy, dx));
+        double turretTarget = targetGlobalAngle - robotHeading;
         while (turretTarget > 180) turretTarget -= 360;
         while (turretTarget < -180) turretTarget += 360;
         turretToAngle(turretTarget);
+    }
+
+    public void updateConstants(){
+        turretMotor.setInverted(RobotConstants.turretReversed);
+        pdController.setP(RobotConstants.turretPCoeff);
+        pdController.setD(RobotConstants.turretDCoeff);
     }
 
     public Motor getTurretMotor(){

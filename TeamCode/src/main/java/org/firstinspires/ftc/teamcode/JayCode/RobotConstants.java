@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.JayCode;
 
 import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.seattlesolvers.solverslib.geometry.Pose2d;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
@@ -44,9 +45,10 @@ public class RobotConstants {
     public static final Motor.GoBILDA turretMotType = Motor.GoBILDA.RPM_1150;
     public static boolean turretReversed = true;
 
+    public static double turretTolerance = 3;
     public static double turretLeftMax = -100; //degrees
-    public static double turretRightMax = 110;
-    public static double turretPCoeff = 0.02, turretDCoeff = 0.001;
+    public static double turretRightMax = 100;
+    public static double turretPCoeff = 0.019, turretDCoeff = 0;
     public static final double turretRatio = 2/1;
     public static final double turretTicksPerDegree = (turretMotType.getCPR() * turretRatio) / 360;
 
@@ -62,8 +64,8 @@ public class RobotConstants {
 
     public static double stopperTime = 0.5;
     public static final String stopperName = "kickerServo";
-    public static final double stopperClose = 0.5;
-    public static final double stopperOpen = 0.5;
+    public static final double stopperClose = 0.285;
+    public static final double stopperOpen = 0.59;
 
     public static final String flName = "flMotor";
     public static final String blName = "blMotor";
