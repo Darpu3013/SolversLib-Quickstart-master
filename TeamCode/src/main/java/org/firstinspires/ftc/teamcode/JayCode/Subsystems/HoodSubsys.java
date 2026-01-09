@@ -21,6 +21,11 @@ public class HoodSubsys extends SubsystemBase {
         hoodServo.set(clampedTarg);
     }
 
+    public void runHoodRegression(double distance){
+        double output = -0.000060814 * Math.pow(distance, 2) + 0.0196986 * distance - -0.863932;
+        hoodTo(output);
+    }
+
     public ServoEx getServo(){
         return hoodServo;
     }

@@ -30,6 +30,11 @@ public class FlywheelSubsys extends SubsystemBase {
         flywheelMotors.set(velocity);
     }
 
+    public void runFlywheelRegression(double distance){
+        double vel = 0.0103226 * Math.pow(distance, 2) + 5.71055 * distance + 1639.80756;
+        setFlywheelVel(vel);
+    }
+
     public void updateConstants(){
         flywheelMotors.setVeloCoefficients(RobotConstants.flywheelPCoeff, 0, RobotConstants.flywheelDCoeff);
         flywheelMotors.setFeedforwardCoefficients(0, RobotConstants.flywheelKV);

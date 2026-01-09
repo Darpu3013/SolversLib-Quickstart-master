@@ -8,6 +8,7 @@ import com.seattlesolvers.solverslib.command.SubsystemBase;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.JayCode.RobotConstants;
 
@@ -59,5 +60,13 @@ public class LocalizationSubsys extends SubsystemBase {
 
     public double getPinpointHeading(){
         return pinpoint.getHeading(AngleUnit.DEGREES);
+    }
+
+    public Pose2D getPinpointPose(){
+        return pinpoint.getPosition();
+    }
+
+    public void setPinpoint(Pose2D pose){
+        pinpoint.setPosition(pose);
     }
 }

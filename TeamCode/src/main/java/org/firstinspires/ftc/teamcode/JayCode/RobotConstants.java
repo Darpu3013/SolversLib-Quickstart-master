@@ -54,10 +54,23 @@ public class RobotConstants {
     public static final double blueGoalY = -72;
     public static final double redGoalY = 72;
 
+    public static final String intakeName = "intakeMotor";
+    public static boolean intakeReversed = true;
+
     public static final double hoodMin = 0.08;
     public static final double hoodMax = 0.754;
 
+    public static double stopperTime = 0.5;
     public static final String stopperName = "kickerServo";
     public static final double stopperClose = 0.5;
     public static final double stopperOpen = 0.5;
+
+    public static final String flName = "flMotor";
+    public static final String blName = "blMotor";
+    public static final String brName = "brMotor";
+    public static final String frName = "frMotor";
+    public static boolean leftDTReversed = true;
+    public static final Motor.ZeroPowerBehavior teleopBrakeBehavior = Motor.ZeroPowerBehavior.BRAKE;
+    public static boolean fieldCentric = false;
+    public static double maxDriveSpeed = 1.0;
 }
