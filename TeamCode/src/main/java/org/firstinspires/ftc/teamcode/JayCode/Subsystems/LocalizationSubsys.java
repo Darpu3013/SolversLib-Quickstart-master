@@ -16,6 +16,8 @@ public class LocalizationSubsys extends SubsystemBase {
     private GoBildaPinpointDriver pinpoint;
     private LLResult latestResult;
 
+    private double goalX = RobotConstants.goalX, goalY;
+
     public LocalizationSubsys(final HardwareMap hwMap){
         pinpoint = hwMap.get(GoBildaPinpointDriver.class, RobotConstants.pinpointName);
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.REVERSED);
@@ -24,29 +26,35 @@ public class LocalizationSubsys extends SubsystemBase {
 
         limelight = hwMap.get(Limelight3A.class, RobotConstants.limelightName);
         limelight.start();
-        if (RobotConstants.robotTeam == RobotConstants.Team.Red) {
+        if (RobotConstants.robotTeam == RobotConstants.Team.RED) {
             limelight.pipelineSwitch(RobotConstants.redPipeline);
+            goalY = RobotConstants.redGoalY;
         } else {
             limelight.pipelineSwitch(RobotConstants.bluePipeline);
+            goalY = RobotConstants.blueGoalY;
         }
+
     }
 
-    public Pose3D getRobotPos(){
+    public double getDistance() {
         pinpoint.update();
-        double heading = pinpoint.getHeading(AngleUnit.DEGREES);
+        double referenceX = pinpoint.getPosX(DistanceUnit.INCH);
+        double referenceY = pinpoint.getPosY(DistanceUnit.INCH);
+        double llX = 0, llY = 0;
         latestResult = limelight.getLatestResult();
-        limelight.updateRobotOrientation(heading);
         if (latestResult != null && latestResult.isValid()){
-            Pose3D botPose = latestResult.getBotpose_MT2();
-            if (botPose != null){
-                RobotConstants.limelightPose = botPose;
+            Pose3D botpose = latestResult.getBotpose();
+            if (botpose != null){
+                llX = botpose.getPosition().x * 100 / 2.54;
+                llY = botpose.getPosition().y * 100 / 2.54;
             }
         }
-        return RobotConstants.limelightPose;
-    }
-
-    public double getDistance(){
-        return 0;
+        if (Math.abs(referenceX) > 10 && Math.abs(referenceY) > 10){
+            if (Math.signum(referenceX) == -Math.signum(llX)) {llX *= -1;}
+            if (Math.signum(referenceY) == -Math.signum(llY)) {llY *= -1;}
+        }
+        double distX = llX - goalX, distY = llY - goalY;
+        return Math.hypot(distX, distY);
     }
 
     public double getPinpointHeading(){

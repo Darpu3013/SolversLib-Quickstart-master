@@ -16,10 +16,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 public class RobotConstants {
 
     public enum Team {
-        Red, Blue
+        RED, BLUE
     }
 
-    public static Team robotTeam = Team.Red;
+    public static Team robotTeam = Team.RED;
 
     public static final String limelightName = "limelight";
     public static int redPipeline = 7;
@@ -50,9 +50,14 @@ public class RobotConstants {
     public static final double turretRatio = 2/1;
     public static final double turretTicksPerDegree = (turretMotType.getCPR() * turretRatio) / 360;
 
-    public static final double blueGoalX = -72;
+    public static final double goalX = -72;
     public static final double blueGoalY = -72;
+    public static final double redGoalY = 72;
 
     public static final double hoodMin = 0.08;
     public static final double hoodMax = 0.754;
+
+    public static final String stopperName = "kickerServo";
+    public static final double stopperClose = 0.5;
+    public static final double stopperOpen = 0.5;
 }

@@ -38,7 +38,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void runTurret(){
         pinpoint.update();
-        double dx = RobotConstants.blueGoalX - pinpoint.getPosX(DistanceUnit.INCH);
+        double dx = RobotConstants.goalX - pinpoint.getPosX(DistanceUnit.INCH);
         double dy = RobotConstants.blueGoalY - pinpoint.getPosY(DistanceUnit.INCH);
         double targetGlobalAngle = Math.toDegrees(Math.atan2(dy, dx));
         double turretTarget = targetGlobalAngle - pinpoint.getHeading(AngleUnit.DEGREES);
