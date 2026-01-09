@@ -20,9 +20,11 @@ public class FlywheelSubsys extends SubsystemBase {
         leftFlywheel.stopAndResetEncoder();
         leftFlywheel.setVeloCoefficients(RobotConstants.flywheelPCoeff, 0, RobotConstants.flywheelDCoeff);
         leftFlywheel.setFeedforwardCoefficients(0, RobotConstants.flywheelKV);
+        leftFlywheel.setZeroPowerBehavior(Motor.ZeroPowerBehavior.FLOAT);
 
         rightFlywheel = new Motor(hwMap, RobotConstants.rightFlyWheelName, Motor.GoBILDA.BARE)
                 .setInverted(!RobotConstants.leftFlywheelInverted);
+        rightFlywheel.setZeroPowerBehavior(Motor.ZeroPowerBehavior.FLOAT);
         flywheelMotors = new MotorGroup(leftFlywheel, rightFlywheel);
     }
 
@@ -38,6 +40,10 @@ public class FlywheelSubsys extends SubsystemBase {
     public void updateConstants(){
         flywheelMotors.setVeloCoefficients(RobotConstants.flywheelPCoeff, 0, RobotConstants.flywheelDCoeff);
         flywheelMotors.setFeedforwardCoefficients(0, RobotConstants.flywheelKV);
+    }
+
+    public void idleFlywheel(){
+        flywheelMotors.set(0);
     }
 
     public double getFlywheelVel(){

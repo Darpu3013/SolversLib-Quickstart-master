@@ -20,4 +20,8 @@ public class StopperSubsys extends SubsystemBase {
     public void stopperOpen(){
         stopperServo.set(RobotConstants.stopperOpen);
     }
+
+    public double getPos(){
+        return stopperServo.getRawPosition();
+    }
 }

@@ -18,10 +18,20 @@ public class DriveSubsys extends SubsystemBase {
                 .setInverted(!RobotConstants.leftDTReversed);
         frMotor = new Motor(hwMap, RobotConstants.frName, Motor.GoBILDA.RPM_435)
                 .setInverted(!RobotConstants.leftDTReversed);
+        flMotor.setZeroPowerBehavior(RobotConstants.teleopBrakeBehavior);
+        blMotor.setZeroPowerBehavior(RobotConstants.teleopBrakeBehavior);
+        brMotor.setZeroPowerBehavior(RobotConstants.teleopBrakeBehavior);
+        frMotor.setZeroPowerBehavior(RobotConstants.teleopBrakeBehavior);
     }
 
-    public void runDrive(double translateY, double strafeX, double rotation, double heading){
-        double y = -translateY, x = strafeX, rx = rotation, rotX, rotY;
+    public void runDrive(double translateY, double strafeX, double rotation, double headin){
+        double y = -translateY, x = strafeX, rx = rotation, rotX, rotY, heading;
+        if (RobotConstants.robotTeam == RobotConstants.Team.RED){
+            heading = Math.toRadians(headin-RobotConstants.redDriveOffset);
+        } else {
+            heading = Math.toRadians(headin - RobotConstants.blueDriveOffset);
+        }
+
         if(RobotConstants.fieldCentric){
              rotX = x * Math.cos(-heading) - y * Math.sin(-heading);
              rotY = x * Math.sin(-heading) + y * Math.cos(-heading);

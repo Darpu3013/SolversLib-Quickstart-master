@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.JayCode;
 
 import com.bylazar.configurables.annotations.Configurable;
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,7 +9,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.LocalizationSubsys;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.TurretSubsys;
-import org.firstinspires.ftc.teamcode.JayCode.Subsystems.TurretSubsystem;
 
 @Configurable
 @TeleOp

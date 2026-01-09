@@ -67,12 +67,15 @@ public class RobotConstants {
     public static final double stopperClose = 0.285;
     public static final double stopperOpen = 0.59;
 
+
+    public static final double redDriveOffset = 90;
+    public static final double blueDriveOffset = -90;
     public static final String flName = "flMotor";
     public static final String blName = "blMotor";
     public static final String brName = "brMotor";
     public static final String frName = "frMotor";
     public static boolean leftDTReversed = true;
     public static final Motor.ZeroPowerBehavior teleopBrakeBehavior = Motor.ZeroPowerBehavior.BRAKE;
-    public static boolean fieldCentric = false;
+    public static boolean fieldCentric = true;
     public static double maxDriveSpeed = 1.0;
 }
