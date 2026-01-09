@@ -46,9 +46,9 @@ public class RobotConstants {
     public static boolean turretReversed = true;
 
     public static double turretTolerance = 3;
-    public static double turretLeftMax = -100; //degrees
-    public static double turretRightMax = 100;
-    public static double turretPCoeff = 0.019, turretDCoeff = 0;
+    public static double turretLeftMax = -90; //degrees
+    public static double turretRightMax = 90;
+    public static double turretPCoeff = 0.018, turretDCoeff = 0;
     public static final double turretRatio = 2/1;
     public static final double turretTicksPerDegree = (turretMotType.getCPR() * turretRatio) / 360;
 
