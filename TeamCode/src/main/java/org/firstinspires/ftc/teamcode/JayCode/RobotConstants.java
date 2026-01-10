@@ -20,6 +20,12 @@ public class RobotConstants {
         RED, BLUE
     }
 
+    public static Pose2D centerPose = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D autoPose1 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D autoPose2 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D autoPose3 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D endPose = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+
     public static Team robotTeam = Team.RED;
 
     public static final String limelightName = "limelight";
@@ -38,8 +44,6 @@ public class RobotConstants {
     public static final String leftFlywheelName = "leftFlywheel";
     public static final String rightFlyWheelName = "rightFlywheel";
     public static final boolean leftFlywheelInverted = true;
-
-    public static Pose2D robotPose = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
 
     public static final String turretName = "turretMotor";
     public static final Motor.GoBILDA turretMotType = Motor.GoBILDA.RPM_1150;

@@ -20,7 +20,7 @@ public class FlywheelTestOpMode extends OpMode {
     public void init() {
         flywheels = new FlywheelSubsys(hardwareMap);
         hood = new HoodSubsys(hardwareMap);
-        localizator = new LocalizationSubsys(hardwareMap);
+        localizator = new LocalizationSubsys(hardwareMap, RobotConstants.centerPose);
         hood.hoodTo(0.5);
         intake = new Motor(hardwareMap, "intakeMotor");
         intake.setInverted(true);

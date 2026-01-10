@@ -19,7 +19,7 @@ public class TurretTestOpMode extends OpMode {
     @Override
     public void init() {
         turretSubsystem = new TurretSubsys(hardwareMap);
-        localizer = new LocalizationSubsys(hardwareMap);
+        localizer = new LocalizationSubsys(hardwareMap, RobotConstants.centerPose);
     }
 
     @Override

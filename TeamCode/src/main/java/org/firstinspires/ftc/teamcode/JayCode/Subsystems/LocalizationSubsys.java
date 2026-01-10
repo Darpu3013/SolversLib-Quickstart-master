@@ -19,11 +19,11 @@ public class LocalizationSubsys extends SubsystemBase {
 
     private double goalX = RobotConstants.goalX, goalY;
 
-    public LocalizationSubsys(final HardwareMap hwMap){
+    public LocalizationSubsys(final HardwareMap hwMap, Pose2D startingPose){
         pinpoint = hwMap.get(GoBildaPinpointDriver.class, RobotConstants.pinpointName);
         pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.REVERSED);
         pinpoint.setOffsets(1.375, 5.875, DistanceUnit.INCH);
-        pinpoint.setPosition(RobotConstants.robotPose);
+        pinpoint.setPosition(startingPose);
 
         limelight = hwMap.get(Limelight3A.class, RobotConstants.limelightName);
         limelight.start();

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.JayCode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.DriveSubsys;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.FlywheelSubsys;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.HoodSubsys;
@@ -23,6 +24,8 @@ public class JayTeleOpRed extends OpMode {
     private TurretSubsys turret;
     public boolean flywheelOn = false;
 
+    Pose2D latestPose;
+
     @Override
     public void init() {
         RobotConstants.robotTeam = RobotConstants.Team.RED;
@@ -31,16 +34,15 @@ public class JayTeleOpRed extends OpMode {
         flywheel = new FlywheelSubsys(hardwareMap);
         hood = new HoodSubsys(hardwareMap);
         intake = new IntakeSubsys(hardwareMap);
-        localizer = new LocalizationSubsys(hardwareMap);
+        localizer = new LocalizationSubsys(hardwareMap, RobotConstants.endPose);
         stopper = new StopperSubsys(hardwareMap);
         turret = new TurretSubsys(hardwareMap);
-        RobotConstants.robotTeam = RobotConstants.Team.RED;
     }
 
     @Override
     public void loop() {
         localizer.updatePinpoint();
-        RobotConstants.robotPose = localizer.getPinpointPose();
+        latestPose = localizer.getPinpointPose();
         double distanceToGoal = localizer.getDistance();
 
         double x = gamepad1.left_stick_x;
@@ -66,7 +68,7 @@ public class JayTeleOpRed extends OpMode {
             }
         }
 
-        turret.turretTrack(RobotConstants.robotPose);
+        turret.turretTrack(latestPose);
 
         if (gamepad1.right_trigger >= 0.1){
             intake.runIntake(1);

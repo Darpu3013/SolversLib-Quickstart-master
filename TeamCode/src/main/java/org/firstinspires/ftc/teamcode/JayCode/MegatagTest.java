@@ -12,7 +12,7 @@ public class MegatagTest extends OpMode {
 
     @Override
     public void init() {
-        localizer = new LocalizationSubsys(hardwareMap);
+        localizer = new LocalizationSubsys(hardwareMap, RobotConstants.centerPose);
     }
 
     @Override
