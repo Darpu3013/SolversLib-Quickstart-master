@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheel;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "RedSubMeasure_THIS")
+//@Autonomous(name = "RedSubMeasure_THIS")
 public class RedSubMeasure_THIS extends OpMode {
 
     private boolean isBlue = false;

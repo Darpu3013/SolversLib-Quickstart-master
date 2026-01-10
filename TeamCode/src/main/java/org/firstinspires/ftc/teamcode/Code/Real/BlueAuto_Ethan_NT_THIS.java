@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheel;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "BlueAutoEthan_NT_THIS")
+//@Autonomous(name = "BlueAutoEthan_NT_THIS")
 
 public class BlueAuto_Ethan_NT_THIS extends OpMode {
 

@@ -1,0 +1,115 @@
+package org.firstinspires.ftc.teamcode.JayCode;
+
+import com.bylazar.configurables.annotations.Configurable;
+import com.pedropathing.geometry.Pose;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.seattlesolvers.solverslib.geometry.Pose2d;
+import com.seattlesolvers.solverslib.hardware.motors.Motor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+
+@Configurable
+public class RobotConstants {
+
+    public enum Team {
+        RED, BLUE
+    }
+
+    public static Pose2D centerPose = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D autoPose1 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D autoPose2 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D autoPose3 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+    public static Pose2D endPose = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+
+    public static Pose2D robotPose = autoPose1;
+
+    public static Team robotTeam = Team.RED;
+
+    public static final String limelightName = "limelight";
+    public static int redPipeline = 7;
+    public static int bluePipeline = 6;
+
+    public static final String pinpointName = "pinpoint";
+
+    public static Pose3D limelightPose = new Pose3D(new Position(DistanceUnit.INCH, 0, 0, 0, 0), new YawPitchRollAngles(AngleUnit.DEGREES, 0, 0, 0, 0));
+
+    public static final String hoodServoName = "hoodServo";
+    public static final boolean hoodReversed = true;
+
+    public static double flywheelPCoeff = 0.0000055, flywheelDCoeff = 0;
+    public static double flywheelKV = 0.0004;
+    public static final String leftFlywheelName = "leftFlywheel";
+    public static final String rightFlyWheelName = "rightFlywheel";
+    public static final boolean leftFlywheelInverted = true;
+
+    public static final String turretName = "turretMotor";
+    public static final Motor.GoBILDA turretMotType = Motor.GoBILDA.RPM_1150;
+    public static boolean turretReversed = true;
+
+    public static double turretTolerance = 3;
+    public static double turretLeftMax = -90; //degrees
+    public static double turretRightMax = 90;
+    public static double turretPCoeff = 0.018, turretDCoeff = 0;
+    public static final double turretRatio = 2/1;
+    public static final double turretTicksPerDegree = (turretMotType.getCPR() * turretRatio) / 360;
+
+    public static final double goalX = -72;
+    public static final double blueGoalY = -72;
+    public static final double redGoalY = 72;
+
+    public static final String intakeName = "intakeMotor";
+    public static boolean intakeReversed = true;
+
+    public static final double hoodMin = 0.08;
+    public static final double hoodMax = 0.754;
+
+    public static double stopperTime = 0.5;
+    public static final String stopperName = "kickerServo";
+    public static final double stopperClose = 0.285;
+    public static final double stopperOpen = 0.59;
+
+
+    public static final double redDriveOffset = 90;
+    public static final double blueDriveOffset = -90;
+    public static final String flName = "flMotor";
+    public static final String blName = "blMotor";
+    public static final String brName = "brMotor";
+    public static final String frName = "frMotor";
+    public static boolean leftDTReversed = true;
+    public static final Motor.ZeroPowerBehavior teleopBrakeBehavior = Motor.ZeroPowerBehavior.BRAKE;
+    public static boolean fieldCentric = true;
+    public static double maxDriveSpeed = 1.0;
+
+    public static Pose2D pedroToFTC(Pose pose) {
+        // Convert Pedro (0–144, origin bottom-left) to center-based coordinates
+        double xCentered = pose.getX() - 72.0;
+        double yCentered = pose.getY() - 72.0;
+
+        // Axis remap:
+        // FTC +X = Pedro -Y
+        // FTC +Y = Pedro +X
+        double ftcX = -yCentered;
+        double ftcY =  xCentered;
+
+        // Heading conversion (both CCW, degrees)
+        // Pedro 0° (+X) → FTC +Y
+        // FTC 0° is Pedro -Y
+        double ftcHeading = pose.getHeading() + 90.0;
+
+        // Normalize to (-180, 180]
+        ftcHeading %= 360.0;
+        if (ftcHeading > 180.0) {
+            ftcHeading -= 360.0;
+        } else if (ftcHeading <= -180.0) {
+            ftcHeading += 360.0;
+        }
+        return new Pose2D(DistanceUnit.INCH, ftcX, ftcY, AngleUnit.DEGREES, ftcHeading);
+    }
+}
+

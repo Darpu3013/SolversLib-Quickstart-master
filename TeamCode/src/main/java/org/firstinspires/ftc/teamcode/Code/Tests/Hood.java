@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Hood Test")
+//@TeleOp(name = "Hood Test")
 public class Hood extends OpMode {
 
     private Limelight3A limelight;
