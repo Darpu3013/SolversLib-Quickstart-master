@@ -15,7 +15,7 @@ import com.seattlesolvers.solverslib.util.TelemetryData;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheel;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "BlueSubMeasure_SL_NT")
+//@Autonomous(name = "BlueSubMeasure_SL_NT")
 public class BlueGoal_SL_NT extends CommandOpMode {
 
     private Follower follower;

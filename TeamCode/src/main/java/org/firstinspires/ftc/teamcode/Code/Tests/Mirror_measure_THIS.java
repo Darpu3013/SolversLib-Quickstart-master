@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheel;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "Mirror_Measure_THIS")
+//@Autonomous(name = "Mirror_Measure_THIS")
 public class Mirror_measure_THIS extends OpMode {
 
     private boolean isBlue = false;

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheelNew;
 
 @Configurable
-@TeleOp(name = "Flywheel TPS Tuner", group = "Test")
+//@TeleOp(name = "Flywheel TPS Tuner", group = "Test")
 public class FlyWheelTPSTuner extends LinearOpMode {
 
     private FlyWheelNew flywheel;

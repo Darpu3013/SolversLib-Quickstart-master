@@ -16,7 +16,7 @@ import com.seattlesolvers.solverslib.util.TelemetryData;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheel;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "BlueSmallTriangle_SL_NT")
+//@Autonomous(name = "BlueSmallTriangle_SL_NT")
 public class BlueSmallTriangle_SL_NT extends CommandOpMode {
 
     private Follower follower;

@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheel;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "BlueSubMeasure_THIS ")
+//@Autonomous(name = "BlueSubMeasure_THIS ")
 public class BlueSubMeasure_THIS extends OpMode {
 
     private int pathState;

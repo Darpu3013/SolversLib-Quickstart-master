@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.FlyWheel;
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "BlueSub_Intake")
+//@Autonomous(name = "BlueSub_Intake")
 public class BlueAutoWithTurret extends CommandOpMode {
 
     private Follower follower;

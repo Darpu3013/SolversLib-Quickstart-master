@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "Measure")
+//@Autonomous(name = "Measure")
 public class Measure extends OpMode {
 
     private int pathState;

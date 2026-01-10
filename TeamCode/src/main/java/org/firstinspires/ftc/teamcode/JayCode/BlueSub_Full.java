@@ -15,18 +15,18 @@ import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 import com.seattlesolvers.solverslib.util.TelemetryData;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
+import org.firstinspires.ftc.teamcode.JayCode.Subsystems.DriveSubsys;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.IntakeSubsys;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.HoodSubsys;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.FlywheelSubsys;
+import org.firstinspires.ftc.teamcode.JayCode.Subsystems.LocalizationSubsys;
+import org.firstinspires.ftc.teamcode.JayCode.Subsystems.StopperSubsys;
 import org.firstinspires.ftc.teamcode.JayCode.Subsystems.TurretSubsys;
 import org.firstinspires.ftc.teamcode.JayCode.RobotConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "BlueSub_Full")
 public class BlueSub_Full extends CommandOpMode {
 
     private Follower follower;
@@ -34,8 +34,13 @@ public class BlueSub_Full extends CommandOpMode {
     private HoodSubsys hood;
     private FlywheelSubsys flywheel;
     private TurretSubsys turret;
+    private StopperSubsys stopper;
+    private LocalizationSubsys localizer;
     private TelemetryData telemetryData;
 
+    private Pose2D latestPose;
+
+    // Define path points
     private final Pose startPose = new Pose(33, 144, Math.toRadians(270));
     private final Pose align = new Pose(72, 108, Math.toRadians(180));
     private final Pose pickUpFirst = new Pose(40, 108, Math.toRadians(180));
@@ -75,59 +80,69 @@ public class BlueSub_Full extends CommandOpMode {
 
     @Override
     public void initialize() {
+
         super.reset();
-
         RobotConstants.robotTeam = RobotConstants.Team.BLUE;
-
         telemetryData = new TelemetryData(telemetry);
 
+        Pose2D ftcPose = RobotConstants.pedroToFTC(startPose);
+
+        // Initialize subsystems
+        flywheel = new FlywheelSubsys(hardwareMap);
+        hood = new HoodSubsys(hardwareMap);
+        intake = new IntakeSubsys(hardwareMap);
+        localizer = new LocalizationSubsys(hardwareMap, ftcPose);
+        stopper = new StopperSubsys(hardwareMap);
+        turret = new TurretSubsys(hardwareMap);
+
+        // Initialize path follower
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
         follower.setMaxPower(0.75);
 
-        intake = new IntakeSubsys(hardwareMap);
-        hood = new HoodSubsys(hardwareMap);
-        flywheel = new FlywheelSubsys(hardwareMap);
-        turret = new TurretSubsys(hardwareMap);
-
         buildPaths();
 
-        double autoShotDistance = 120.0;
+        double autoShotDistance = 120.0; // distance for flywheel & hood regression
 
-        RunCommand turretTracking = new RunCommand(() -> {
-            Pose pose = follower.getPose();
-            Pose2D robotPose = new Pose2D(
-                    DistanceUnit.INCH,
-                    pose.getX(),
-                    pose.getY(),
-                    AngleUnit.DEGREES,
-                    Math.toDegrees(pose.getHeading())
-            );
-            turret.turretTrack(robotPose);
-        }, turret);
+        // Schedule autonomous sequence
+        schedule(new SequentialCommandGroup(
 
-        SequentialCommandGroup autoSequence = new SequentialCommandGroup(
+                // Start intake immediately
+                new InstantCommand(() -> intake.runIntake(1), intake),
 
-                new InstantCommand(() -> intake.runIntake(1.0), intake),
-                new FollowPathCommand(follower, alignWith1).setGlobalMaxPower(0.75),
-                new FollowPathCommand(follower, firstSet),
+                // Run turret & stopper continuously, and run paths & hood/flywheel adjustments
+                new ParallelCommandGroup(
 
-                new InstantCommand(() -> {
-                    hood.runHoodRegression(autoShotDistance);
-                    flywheel.runFlywheelRegression(autoShotDistance);
-                }, hood, flywheel),
+                        // Continuous tracking command (no hood/flywheel here)
+                        new RunCommand(() -> {
+                            localizer.updatePinpoint();
+                            latestPose = localizer.getPinpointPose();
+                            turret.turretTrack(latestPose);
 
-                new FollowPathCommand(follower, secondSet),
+                            if (stopper.getPos() != RobotConstants.stopperOpen) {
+                                stopper.stopperOpen();
+                            }
+                        }, turret, stopper, localizer),
 
+                        // Sequential path & hood/flywheel adjustments
+                        new SequentialCommandGroup(
+                                new FollowPathCommand(follower, alignWith1).setGlobalMaxPower(0.75),
+                                new FollowPathCommand(follower, firstSet),
+                                new InstantCommand(() -> {
+                                    // Update hood & flywheel for shooting
+                                    hood.runHoodRegression(autoShotDistance);
+                                    flywheel.runFlywheelRegression(autoShotDistance);
+                                }, hood, flywheel),
+                                new FollowPathCommand(follower, secondSet)
+                        )
+                ),
+
+                // Stop intake and flywheel at the end
                 new InstantCommand(() -> {
                     intake.runIntake(0);
                     flywheel.setFlywheelVel(0);
-                }, intake, flywheel)
-        );
-
-        schedule(new ParallelCommandGroup(
-                turretTracking,
-                autoSequence
+                    stopper.stopperClose();
+                }, intake, flywheel, stopper)
         ));
     }
 
@@ -135,13 +150,19 @@ public class BlueSub_Full extends CommandOpMode {
     public void run() {
         super.run();
 
+        // Update path follower and localization
         follower.update();
+        localizer.updatePinpoint();
+        latestPose = localizer.getPinpointPose();
 
+        // Telemetry updates
         Pose pose = follower.getPose();
         telemetryData.addData("X", pose.getX());
         telemetryData.addData("Y", pose.getY());
         telemetryData.addData("Heading", Math.toDegrees(pose.getHeading()));
         telemetryData.addData("Flywheel Vel", flywheel.getFlywheelVel());
+        telemetryData.addData("Hood Pos", hood.getServo().get());
+        telemetryData.addData("Stopper Pos", stopper.getPos());
         telemetryData.addData("Turret Pos", turret.getTurretMotor().getCurrentPosition());
         telemetryData.update();
     }

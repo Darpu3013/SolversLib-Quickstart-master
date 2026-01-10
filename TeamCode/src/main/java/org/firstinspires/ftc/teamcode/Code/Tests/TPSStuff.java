@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheelNew;
 
 @Configurable
-@TeleOp(name = "TPS Stuff", group = "Test")
+//@TeleOp(name = "TPS Stuff", group = "Test")
 public class TPSStuff extends LinearOpMode {
 
     private FlyWheelNew flywheel;

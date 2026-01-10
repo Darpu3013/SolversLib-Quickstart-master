@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.JayCode;
 
 import com.bylazar.configurables.annotations.Configurable;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.seattlesolvers.solverslib.geometry.Pose2d;
@@ -25,6 +26,8 @@ public class RobotConstants {
     public static Pose2D autoPose2 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
     public static Pose2D autoPose3 = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
     public static Pose2D endPose = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
+
+    public static Pose2D robotPose = autoPose1;
 
     public static Team robotTeam = Team.RED;
 
@@ -82,4 +85,31 @@ public class RobotConstants {
     public static final Motor.ZeroPowerBehavior teleopBrakeBehavior = Motor.ZeroPowerBehavior.BRAKE;
     public static boolean fieldCentric = true;
     public static double maxDriveSpeed = 1.0;
+
+    public static Pose2D pedroToFTC(Pose pose) {
+        // Convert Pedro (0–144, origin bottom-left) to center-based coordinates
+        double xCentered = pose.getX() - 72.0;
+        double yCentered = pose.getY() - 72.0;
+
+        // Axis remap:
+        // FTC +X = Pedro -Y
+        // FTC +Y = Pedro +X
+        double ftcX = -yCentered;
+        double ftcY =  xCentered;
+
+        // Heading conversion (both CCW, degrees)
+        // Pedro 0° (+X) → FTC +Y
+        // FTC 0° is Pedro -Y
+        double ftcHeading = pose.getHeading() + 90.0;
+
+        // Normalize to (-180, 180]
+        ftcHeading %= 360.0;
+        if (ftcHeading > 180.0) {
+            ftcHeading -= 360.0;
+        } else if (ftcHeading <= -180.0) {
+            ftcHeading += 360.0;
+        }
+        return new Pose2D(DistanceUnit.INCH, ftcX, ftcY, AngleUnit.DEGREES, ftcHeading);
+    }
 }
+

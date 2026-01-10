@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.JayCode.RobotConstants;
 import org.firstinspires.ftc.teamcode.Subsystems.FlyWheel;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "BlueSubMeasure_SolversLib")
+//@Autonomous(name = "BlueSubMeasure_SolversLib")
 public class BlueSub_SL_NT extends CommandOpMode {
     private Follower follower;
     private DcMotor intakeMotor;
