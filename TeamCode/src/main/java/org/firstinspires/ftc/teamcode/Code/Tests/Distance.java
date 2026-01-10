@@ -4,7 +4,7 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+/*
 @TeleOp(name = "Limelight TA Collector with Distance")
 public class Distance extends OpMode {
 
@@ -30,8 +30,6 @@ public class Distance extends OpMode {
     public void loop() {
         LLResult result = limelight.getLatestResult();
 
-        if (result != null && result.isValid()) {
-            double ta = result.getTa();
 
             // Only collect up to MAX_SAMPLES
             if (ta > 0 && taCount < MAX_SAMPLES) {
@@ -76,3 +74,5 @@ public class Distance extends OpMode {
         limelight.stop();
     }
 }
+
+ */
