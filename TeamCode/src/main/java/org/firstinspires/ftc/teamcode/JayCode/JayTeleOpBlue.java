@@ -25,7 +25,7 @@ public class JayTeleOpBlue extends OpMode {
 
     @Override
     public void init() {
-        RobotConstants.robotTeam = RobotConstants.Team.RED;
+        RobotConstants.robotTeam = RobotConstants.Team.BLUE;
 
         drivetrain = new DriveSubsys(hardwareMap);
         flywheel = new FlywheelSubsys(hardwareMap);
@@ -34,7 +34,6 @@ public class JayTeleOpBlue extends OpMode {
         localizer = new LocalizationSubsys(hardwareMap);
         stopper = new StopperSubsys(hardwareMap);
         turret = new TurretSubsys(hardwareMap);
-        RobotConstants.robotTeam = RobotConstants.Team.BLUE;
     }
 
     @Override

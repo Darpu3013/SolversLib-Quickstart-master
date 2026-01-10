@@ -34,7 +34,7 @@ public class JayTeleOpRed extends OpMode {
         localizer = new LocalizationSubsys(hardwareMap);
         stopper = new StopperSubsys(hardwareMap);
         turret = new TurretSubsys(hardwareMap);
-        RobotConstants.robotTeam = RobotConstants.Team.RED;
+
     }
 
     @Override
